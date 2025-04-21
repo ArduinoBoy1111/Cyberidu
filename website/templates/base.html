@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(93, 93, 93);
+      }
+
+      .icon-link {
+        color: azure;
+        transition: color 0.3s ease;
+        text-decoration: none;
+      }
+
+      .icon-link:hover {
+        color: #69eeff;
+        text-decoration: none;
+      }
+
+      .custom-card {
+        background-color: #69eeff;
+        color: black;
+        text-decoration: none !important;
+        border-width: 0.4rem;
+        border-color: #00a3b8;
+        transition: transform 0.2s;
+      }
+
+      .custom-card:hover {
+        color: black;
+        transform: scale(1.03);
+      }
+
+      .custom-card .card-title {
+        color: black;
+        margin: 0;
+      }
+
+      .container, .row {
+        background-color: transparent !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark bg-dark d-flex justify-content-between px-3" style="height: 80px;">
+      <div class="d-flex">
+        <a class="icon-link mr-3" href="{{ url_for('views.home') }}">
+          <i class="fa fa-home" style="font-size: 24px;"></i>
+        </a>
+        <!-- <a class="icon-link" href="{{ url_for('views.about') }}">
+          <i class="fa fa-info" style="font-size: 24px;"></i>
+        </a> -->
+      </div>
+    
+      <div class="d-flex align-items-center" style="height: 100%;">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Cyberidu Logo" style="height: 120px; width: auto;">
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <!-- Arduino Card -->
+        <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
+          <a href="{{ url_for('views.arduino_projects') }}" class="card custom-card" style="width: 12rem;">
+            <img
+              src="{{ url_for('static', filename='arduino_board.png') }}"
+              class="card-img-top"
+              alt="Arduino Projects"
+            />
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <h5 class="card-title text-center">Arduino projects</h5>
+            </div>
+          </a>
+        </div>
+
+        <!-- Software Projects Card -->
+        <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
+          <a href="{{ url_for('views.software_projects') }}" class="card custom-card" style="width: 12rem;">
+            <img
+              src="{{ url_for('static', filename='software.png') }}"
+              class="card-img-top"
+              alt="Apps & Games Projects"
+            />
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <h5 class="card-title text-center">APPs projects & games</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  </body>
+</html>

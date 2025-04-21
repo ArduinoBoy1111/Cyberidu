@@ -1,0 +1,54 @@
+from flask import Blueprint ,render_template ,request
+import os
+
+views = Blueprint('views', __name__)
+
+@views.route('/')
+def home():
+    return render_template("base.html")
+
+@views.route('/about')
+def about():
+    return render_template("about.html")
+
+
+@views.route('/arduino_projects')
+def arduino_projects():
+    projects = [
+        {
+            "name": "Arduino Weather Station",
+            "image": "arduino_project1.png",
+            "price": 49.99,
+            "description": "Real-time weather monitoring with LCD display"
+        },
+        {
+            "name": "Smart Home Controller",
+            "image": "arduino_project2.jpg",
+            "price": 89.99,
+            "description": "Control lights and appliances via smartphone"
+        },
+        {
+            "name": "Robot Arm Kit",
+            "image": "arduino_project3.jpg",
+            "price": 129.99,
+            "description": "6-axis programmable robotic arm with gripper"
+        }
+    ]
+    return render_template("arduino_page.html",projects=projects)
+
+@views.route('/project/<project_name>')
+def project(project_name):
+    # In a real app, you would look up these details from a database
+    # For now, we'll get them from query parameters
+    project_image = request.args.get('image')
+    project_price = request.args.get('price')
+    project_description = request.args.get('description')
+    
+    return render_template("project.html",
+                        project_name=project_name,
+                        project_image=project_image,
+                        project_price=project_price,
+                        project_description=project_description)
+@views.route('/software_projects')
+def software_projects():
+    return render_template("software_page.html")

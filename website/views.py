@@ -16,22 +16,22 @@ def about():
 def arduino_projects():
     projects = [
         {
-            "name": "Arduino Weather Station",
+            "name": "حساس الطقس",
             "image": "arduino_project1.png",
             "price": 49.99,
-            "description": "Real-time weather monitoring with LCD display"
+            "description": "حساس لقياس درجة الحرارة والرطوبة"
         },
         {
-            "name": "Smart Home Controller",
+            "name": "المنزل الذكي",
             "image": "arduino_project2.jpg",
             "price": 89.99,
-            "description": "Control lights and appliances via smartphone"
+            "description": "نظام أمان منزلي ذكي مع كاميرا مراقبة"
         },
         {
-            "name": "Robot Arm Kit",
+            "name": "ذراع روبوتية",
             "image": "arduino_project3.jpg",
             "price": 129.99,
-            "description": "6-axis programmable robotic arm with gripper"
+            "description": "ذراع روبوتية قابلة للبرمجة للتحكم عن بعد"
         }
     ]
     return render_template("arduino_page.html",projects=projects)

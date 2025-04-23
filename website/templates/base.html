@@ -20,15 +20,7 @@
         margin: 0;
         padding: 0;
         background-color: #252525;
-      }
-
-      .container {
-        width: 80%;
-        max-width: 1200px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 10px;
+        overflow-x: hidden;
       }
 
       .icon-link {
@@ -36,12 +28,126 @@
         transition: color 0.3s ease;
         text-decoration: none;
       }
-
       .icon-link:hover {
         color: #28809a;
-        text-decoration: none;
       }
 
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1060;
+        background-color: #343a40;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 80px;
+        padding: 0 1rem;
+      }
+      .navbar-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .navbar-toggler {
+        border: none;
+        background: transparent;
+        color: #e8e8e8;
+        font-size: 24px;
+      }
+      .navbar-toggler:focus {
+        outline: none;
+      }
+
+      /* Overlay */
+      #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1050;
+      }
+      #overlay.active {
+        display: block;
+      }
+
+      /* Sidebar - darker tone */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        right: -260px;
+        width: 260px;
+        height: 100%;
+        background-color: #2b2b2b;
+        color: #e8e8e8;
+        transition: right 0.3s ease;
+        z-index: 1060;
+        padding-top: 20px;
+      }
+      .sidebar.open {
+        right: 0;
+      }
+      .sidebar a {
+        display: block;
+        color: #e8e8e8;
+        padding: 12px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: color 0.3s ease, background 0.3s ease;
+      }
+      .sidebar a:hover {
+        color: #28809a;
+        background-color: rgba(40, 128, 154, 0.1);
+      }
+      .sidebar a i {
+        margin-left: 10px;
+      }
+
+      /* Submenu with animation */
+      .submenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding-left: 20px;
+      }
+      .submenu.open {
+        max-height: 200px;
+      }
+
+      /* Responsive Main Logo and Description */
+      .responsive-main-img {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        display: block;
+        margin: 0 auto 20px;
+        object-fit: contain;
+      }
+      .text-center.mb-4 p {
+        font-size: 1.2rem;
+        color: #ffffff;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      /* Cards Section */
+      .cards-section {
+        position: relative;
+        padding: 60px 0;
+      }
+      .stripe-background {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 400px;
+        background-color: #2b2b2b;
+        z-index: 1;
+        transform: translateY(-55%);
+      }
       .custom-card {
         background-color: #737778;
         color: #ffffff;
@@ -49,95 +155,131 @@
         border-width: 0.4rem;
         border-color: #404242;
         transition: transform 0.2s;
+        z-index: 2;
+        position: relative;
       }
-
       .custom-card:hover {
-        color: #ffffff;
         transform: scale(1.03);
       }
-
       .custom-card .card-title {
-        color: #ffffff;
+        color: #ffffff !important;
         margin: 0;
-      }
-
-      .main-image {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-        margin-bottom: 30px;
-      }
-
-      .container,
-      .row {
-        background-color: transparent !important;
-      }
-
-      .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1030; /* Make sure it stays on top of other stuff */
-        background-color: #28809a;
-      }
-
-      .navbar-dark .navbar-nav .nav-link {
-        color: #ffffff;
-      }
-
-      .navbar-dark .navbar-nav .nav-link:hover {
-        color: #e8e8e8;
       }
     </style>
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark d-flex justify-content-between px-3" style="height: 80px;">
-      <div class="d-flex align-items-center">
-        <a class="icon-link mr-3" href="{{ url_for('views.home') }}">
-          <i class="fa fa-home" style="font-size: 24px;"></i>
-        </a>
+    <nav class="navbar" onclick="maybeClose(event)">
+      <a class="icon-link" href="{{ url_for('views.home') }}">
+        <i class="fa fa-home" style="font-size:24px;"></i>
+      </a>
+      <div class="navbar-logo">
+        <img
+          src="{{ url_for('static', filename='updated_logo.png') }}"
+          alt="Cyberidu Logo"
+          style="height:120px; width:auto;"
+        />
       </div>
-    
-      <div class="d-flex align-items-center" style="height: 100%;">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Cyberidu Logo" style="height: 120px; width: auto;" />
-      </div>
+      <button class="navbar-toggler" onclick="toggleSidebar(event)">
+        <i class="fa fa-bars"></i>
+      </button>
     </nav>
 
+    <div id="overlay" onclick="toggleSidebar(event)"></div>
+    <div class="sidebar" id="sidebar">
+      <a href="#" onclick="toggleProjects(event)">
+        مشاريع <i class="fa fa-chevron-down"></i>
+      </a>
+      <div class="submenu" id="projectsMenu">
+        <a href="{{ url_for('views.arduino_projects') }}">
+          مشاريع أردوينو <i class="fa fa-microchip"></i>
+        </a>
+        <a href="{{ url_for('views.software_projects') }}">
+          برمجيات و العاب<i class="fa fa-gamepad"></i>
+        </a>
+      </div>
+      <a href="#">
+        خدمة الصيانة <i class="fa fa-wrench"></i>
+      </a>
+      <a href="#">
+        من نحن <i class="fa fa-info-circle"></i>
+      </a>
+    </div>
 
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <!-- Arduino Card -->
-        <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
-          <a href="{{ url_for('views.arduino_projects') }}" class="card custom-card" style="width: 12rem;">
-            <img
-              src="{{ url_for('static', filename='arduino_board.png') }}"
-              class="card-img-top"
-              alt="Arduino Projects"
-            />
-            <div class="card-body d-flex justify-content-center align-items-center">
-              <h5 class="card-title text-center">مشاريع أردوينو</h5>
-            </div>
-          </a>
+    <!-- Website Logo and Description -->
+    <div class="text-center mb-4">
+      <img
+        src="{{ url_for('static', filename='updated_logo_thin.png') }}"
+        alt="Cyberidu Logo"
+        class="responsive-main-img"
+      />
+      <div class="px-4 px-md-5">
+        <p>
+          مرحباً بكم في موقع كور تيك - منصة لتقديم مشاريع المدارس من أردوينو وتطبيقات برمجية بطريقة احترافية وسهلة.
+        </p>
+      </div>
+    </div>
+
+    <!-- Card Section with Background Stripe Behind -->
+    <div class="cards-section">
+      <div class="stripe-background">
+        <div class="text-center mt-3">
+          <h3 style="color: #ffffff;">اختر نوع المشروع الذي تريده</h3>
         </div>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <!-- Arduino Card -->
+          <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
+            <a href="{{ url_for('views.arduino_projects') }}" class="card custom-card" style="width: 12rem;">
+              <img
+                src="{{ url_for('static', filename='arduino_board.png') }}"
+                class="card-img-top"
+                alt="Arduino Projects"
+              />
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <h5 class="card-title text-center">مشاريع أردوينو</h5>
+              </div>
+            </a>
+          </div>
 
-        <!-- Software Projects Card -->
-        <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
-          <a href="{{ url_for('views.software_projects') }}" class="card custom-card" style="width: 12rem;">
-            <img
-              src="{{ url_for('static', filename='software.png') }}"
-              class="card-img-top"
-              alt="Apps & Games Projects"
-            />
-            <div class="card-body d-flex justify-content-center align-items-center">
-              <h5 class="card-title text-center">تطبيقات برمجية و العاب</h5>
-            </div>
-          </a>
+          <!-- Software Projects Card -->
+          <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
+            <a href="{{ url_for('views.software_projects') }}" class="card custom-card" style="width: 12rem;">
+              <img
+                src="{{ url_for('static', filename='software.png') }}"
+                class="card-img-top"
+                alt="Apps & Games Projects"
+              />
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <h5 class="card-title text-center">برمجيات و العاب</h5>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script>
+      function toggleSidebar(e) {
+        e.stopPropagation();
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+      }
+      function toggleProjects(e) {
+        e.preventDefault();
+        const submenu = document.getElementById('projectsMenu');
+        submenu.classList.toggle('open');
+      }
+      function maybeClose(e) {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        if (sidebar.classList.contains('open')) {
+          toggleSidebar(e);
+        }
+      }
+    </script>
   </body>
 </html>

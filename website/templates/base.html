@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -14,66 +13,96 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
-
     <style>
-      html, body {
+      html,
+      body {
         height: 100%;
         margin: 0;
         padding: 0;
-        background-color: rgb(93, 93, 93);
+        background-color: #252525;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
       }
 
       .icon-link {
-        color: azure;
+        color: #e8e8e8;
         transition: color 0.3s ease;
         text-decoration: none;
       }
 
       .icon-link:hover {
-        color: #69eeff;
+        color: #28809a;
         text-decoration: none;
       }
 
       .custom-card {
-        background-color: #69eeff;
-        color: black;
+        background-color: #737778;
+        color: #ffffff;
         text-decoration: none !important;
         border-width: 0.4rem;
-        border-color: #00a3b8;
+        border-color: #404242;
         transition: transform 0.2s;
       }
 
       .custom-card:hover {
-        color: black;
+        color: #ffffff;
         transform: scale(1.03);
       }
 
       .custom-card .card-title {
-        color: black;
+        color: #ffffff;
         margin: 0;
       }
 
-      .container, .row {
+      .main-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 30px;
+      }
+
+      .container,
+      .row {
         background-color: transparent !important;
+      }
+
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1030; /* Make sure it stays on top of other stuff */
+        background-color: #28809a;
+      }
+
+      .navbar-dark .navbar-nav .nav-link {
+        color: #ffffff;
+      }
+
+      .navbar-dark .navbar-nav .nav-link:hover {
+        color: #e8e8e8;
       }
     </style>
   </head>
 
   <body>
     <nav class="navbar navbar-dark bg-dark d-flex justify-content-between px-3" style="height: 80px;">
-      <div class="d-flex">
+      <div class="d-flex align-items-center">
         <a class="icon-link mr-3" href="{{ url_for('views.home') }}">
           <i class="fa fa-home" style="font-size: 24px;"></i>
         </a>
-        <!-- <a class="icon-link" href="{{ url_for('views.about') }}">
-          <i class="fa fa-info" style="font-size: 24px;"></i>
-        </a> -->
       </div>
     
       <div class="d-flex align-items-center" style="height: 100%;">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Cyberidu Logo" style="height: 120px; width: auto;">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Cyberidu Logo" style="height: 120px; width: auto;" />
       </div>
     </nav>
+
 
     <div class="container mt-5">
       <div class="row justify-content-center">

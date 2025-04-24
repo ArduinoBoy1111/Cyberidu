@@ -1,285 +1,405 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
-    />
-    <style>
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background-color: #252525;
-        overflow-x: hidden;
-      }
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous" />
 
-      .icon-link {
-        color: #e8e8e8;
-        transition: color 0.3s ease;
-        text-decoration: none;
-      }
-      .icon-link:hover {
-        color: #28809a;
-      }
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #252525;
+      overflow-x: hidden;
+    }
 
-      .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1060;
-        background-color: #343a40;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 80px;
-        padding: 0 1rem;
-      }
-      .navbar-logo {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .navbar-toggler {
-        border: none;
-        background: transparent;
-        color: #e8e8e8;
-        font-size: 24px;
-      }
-      .navbar-toggler:focus {
-        outline: none;
-      }
+    .icon-link {
+      color: #e8e8e8;
+      transition: color 0.3s ease;
+      text-decoration: none;
+    }
+    .icon-link:hover {
+      color: #28809a;
+    }
 
-      /* Overlay */
-      #overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 1050;
-      }
-      #overlay.active {
-        display: block;
-      }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1060;
+      background-color: #343a40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 1rem;
+    }
+    .navbar-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-      /* Sidebar - darker tone */
-      .sidebar {
-        position: fixed;
-        top: 0;
-        right: -260px;
-        width: 260px;
-        height: 100%;
-        background-color: #2b2b2b;
-        color: #e8e8e8;
-        transition: right 0.3s ease;
-        z-index: 1060;
-        padding-top: 20px;
-      }
-      .sidebar.open {
-        right: 0;
-      }
-      .sidebar a {
-        display: block;
-        color: #e8e8e8;
-        padding: 12px 20px;
-        text-decoration: none;
-        font-size: 18px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: color 0.3s ease, background 0.3s ease;
-      }
-      .sidebar a:hover {
-        color: #28809a;
-        background-color: rgba(40, 128, 154, 0.1);
-      }
-      .sidebar a i {
-        margin-left: 10px;
-      }
+    .navbar-toggler {
+      border: none;
+      background: transparent;
+      color: #e8e8e8;
+      font-size: 24px;
+    }
 
-      /* Submenu with animation */
-      .submenu {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        padding-left: 20px;
-      }
-      .submenu.open {
-        max-height: 200px;
-      }
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1050;
+    }
+    #overlay.active {
+      display: block;
+    }
 
-      /* Responsive Main Logo and Description */
-      .responsive-main-img {
-        width: 100%;
-        max-width: 600px;
-        height: auto;
-        display: block;
-        margin: 0 auto 20px;
-        object-fit: contain;
-      }
-      .text-center.mb-4 p {
-        font-size: 1.2rem;
-        color: #ffffff;
-        max-width: 800px;
-        margin: 0 auto;
-      }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100%;
+      background-color: #2b2b2b;
+      color: #e8e8e8;
+      transition: right 0.3s ease;
+      z-index: 1060;
+      padding-top: 20px;
+    }
+    .sidebar.open {
+      right: 0;
+    }
+    .sidebar a {
+      display: block;
+      color: #e8e8e8;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .sidebar a:hover {
+      color: #28809a;
+      background-color: rgba(40, 128, 154, 0.1);
+    }
 
-      /* Cards Section */
-      .cards-section {
-        position: relative;
-        padding: 60px 0;
-      }
-      .stripe-background {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 100%;
-        height: 400px;
-        background-color: #2b2b2b;
-        z-index: 1;
-        transform: translateY(-55%);
-      }
-      .custom-card {
-        background-color: #737778;
-        color: #ffffff;
-        text-decoration: none !important;
-        border-width: 0.4rem;
-        border-color: #404242;
-        transition: transform 0.2s;
-        z-index: 2;
-        position: relative;
-      }
-      .custom-card:hover {
-        transform: scale(1.03);
-      }
-      .custom-card .card-title {
-        color: #ffffff !important;
-        margin: 0;
-      }
-    </style>
-  </head>
+    .submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding-left: 20px;
+    }
+    .submenu.open {
+      max-height: 200px;
+    }
 
-  <body>
-    <nav class="navbar" onclick="maybeClose(event)">
-      <a class="icon-link" href="{{ url_for('views.home') }}">
-        <i class="fa fa-home" style="font-size:24px;"></i>
-      </a>
-      <div class="navbar-logo">
-        <img
-          src="{{ url_for('static', filename='updated_logo.png') }}"
-          alt="Cyberidu Logo"
-          style="height:120px; width:auto;"
-        />
-      </div>
-      <button class="navbar-toggler" onclick="toggleSidebar(event)">
-        <i class="fa fa-bars"></i>
-      </button>
-    </nav>
+    .responsive-main-img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+      object-fit: contain;
+    }
+    .text-center.mb-4 p {
+      font-size: 1.2rem;
+      color: #ffffff;
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-    <div id="overlay" onclick="toggleSidebar(event)"></div>
-    <div class="sidebar" id="sidebar">
-      <a href="#" onclick="toggleProjects(event)">
-        مشاريع <i class="fa fa-chevron-down"></i>
-      </a>
-      <div class="submenu" id="projectsMenu">
-        <a href="{{ url_for('views.arduino_projects') }}">
-          مشاريع أردوينو <i class="fa fa-microchip"></i>
-        </a>
-        <a href="{{ url_for('views.software_projects') }}">
-          برمجيات و العاب<i class="fa fa-gamepad"></i>
-        </a>
-      </div>
-      <a href="#">
-        خدمة الصيانة <i class="fa fa-wrench"></i>
-      </a>
-      <a href="#">
-        من نحن <i class="fa fa-info-circle"></i>
-      </a>
+    .cards-section {
+      position: relative;
+      padding: 60px 0;
+    }
+
+    .stripe-background {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 400px;
+      background-color: #2b2b2b;
+      z-index: 1;
+      transform: translateY(-55%);
+    }
+
+    .custom-card {
+      background-color: #737778;
+      color: #ffffff;
+      text-decoration: none !important;
+      border-width: 0.4rem;
+      border-color: #404242;
+      transition: transform 0.2s;
+      z-index: 2;
+      position: relative;
+    }
+    .custom-card:hover {
+      transform: scale(1.03);
+    }
+    .custom-card .card-title {
+      color: #ffffff !important;
+      margin: 0;
+    }
+
+    .card-anchor-wrapper.custom-card {
+      display: block;
+      box-sizing: border-box;
+      border: 0.4rem solid #404242;
+      border-radius: 10px;
+      background-color: #737778;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      transition: transform 0.2s;
+      overflow: hidden;
+      height: 100%;
+    }
+    .card-anchor-wrapper.custom-card:hover {
+      transform: scale(1.03);
+    }
+    .card-anchor-wrapper.custom-card .card {
+      border: none;
+      background: transparent;
+      height: 100%;
+    }
+    .card-anchor-wrapper.custom-card .card-img-top {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-anchor-wrapper.custom-card .card-title {
+      color: #ffffff;
+      margin: 0;
+    }
+    .price-badge {
+      background-color: #28809a;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .new-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #ff4c4c;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+    .carousel-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #1a1a1a;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.6);
+  border-bottom-left-radius: 10px;
+  z-index: 2;
+  max-width: 60%;
+}
+
+.description-hover {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.7s ease-in-out;
+  margin-top: 4px;
+}
+
+.carousel-overlay:hover .description-hover {
+  max-height: 300px; /* enough space for text + button */
+  opacity: 1;
+}
+
+  </style>
+</head>
+
+<body>
+  <nav class="navbar" onclick="maybeClose(event)">
+    <button class="navbar-toggler" onclick="toggleSidebar(event)">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="navbar-logo">
+      <img src="{{ url_for('static', filename='updated_logo.png') }}" alt="Cyberidu Logo" style="height:120px;" />
     </div>
+    <a class="icon-link" href="{{ url_for('views.home') }}">
+      <i class="fa fa-home" style="font-size:24px;"></i>
+    </a>
+    
+  </nav>
 
-    <!-- Website Logo and Description -->
+  <div id="overlay" onclick="toggleSidebar(event)"></div>
+  <div class="sidebar" id="sidebar">
+    <a href="#" onclick="toggleProjects(event)">مشاريع <i class="fa fa-chevron-down"></i></a>
+    <div class="submenu" id="projectsMenu">
+      <a href="{{ url_for('views.arduino_projects') }}">مشاريع أردوينو <i class="fa fa-microchip"></i></a>
+      <a href="{{ url_for('views.software_projects') }}">برمجيات و العاب<i class="fa fa-gamepad"></i></a>
+    </div>
+    <a href="#">خدمة الصيانة <i class="fa fa-wrench"></i></a>
+    <a href="#">من نحن <i class="fa fa-info-circle"></i></a>
+  </div>
+
+  <div class="text-center mb-4">
+    <img src="{{ url_for('static', filename='updated_logo_thin.png') }}" alt="Cyberidu Logo" class="responsive-main-img" />
+    <div class="px-4 px-md-5">
+      <p>مرحباً بكم في موقع كور تيك - منصة لتقديم مشاريع المدارس من أردوينو وتطبيقات برمجية بطريقة احترافية وسهلة.</p>
+    </div>
+  </div>
+
+  <!-- Project Carousel -->
+<div class="container my-5" dir="rtl">
+  <div id="featuredCarousel" class="carousel slide" data-ride="carousel" data-interval="3500">
+    <div class="carousel-inner rounded" style="overflow: hidden;">
+      {% for project in projects %}
+      <div class="carousel-item {% if loop.first %}active{% endif %}">
+        <div class="carousel-frame position-relative">
+          <img src="{{ url_for('static', filename=project.image) }}"
+               class="d-block w-100 carousel-img"
+               alt="{{ project.name }}">
+
+               <div class="carousel-overlay text-right">
+                <div class="carousel-info">
+                  <h5 class="text-white mb-1">{{ project.name }}</h5>
+                  <div class="description-hover">
+                    <p class="text-light small mb-2">{{ project.description }}</p>
+                    <a class="btn btn-sm btn-warning mt-1"
+                       href="{{ url_for('views.project', project_name=project.name, image=project.image, price=project.price, description=project.description) }}">
+                      اذهب إلى المشروع
+                    </a>
+                  </div>
+                </div>
+              </div>              
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+  <div class="cards-section">
+    <div class="stripe-background">
+      <div class="text-center mt-3">
+        <h3 style="color: #ffffff;">اختر نوع المشروع الذي تريده</h3>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
+          <a href="{{ url_for('views.arduino_projects') }}" class="card custom-card" style="width: 12rem;">
+            <img src="{{ url_for('static', filename='arduino_board.png') }}" class="card-img-top" alt="Arduino Projects" />
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <h5 class="card-title text-center">مشاريع أردوينو</h5>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
+          <a href="{{ url_for('views.software_projects') }}" class="card custom-card" style="width: 12rem;">
+            <img src="{{ url_for('static', filename='software.png') }}" class="card-img-top" alt="Apps & Games Projects" />
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <h5 class="card-title text-center">برمجيات و العاب</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newest Projects Section -->
+  <div class="container mt-5">
     <div class="text-center mb-4">
-      <img
-        src="{{ url_for('static', filename='updated_logo_thin.png') }}"
-        alt="Cyberidu Logo"
-        class="responsive-main-img"
-      />
-      <div class="px-4 px-md-5">
-        <p>
-          مرحباً بكم في موقع كور تيك - منصة لتقديم مشاريع المدارس من أردوينو وتطبيقات برمجية بطريقة احترافية وسهلة.
-        </p>
-      </div>
+      <h3 style="color: #ffffff;">اكتشف احدث المشاريع :</h3>
     </div>
-
-    <!-- Card Section with Background Stripe Behind -->
-    <div class="cards-section">
-      <div class="stripe-background">
-        <div class="text-center mt-3">
-          <h3 style="color: #ffffff;">اختر نوع المشروع الذي تريده</h3>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row justify-content-center">
-          <!-- Arduino Card -->
-          <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
-            <a href="{{ url_for('views.arduino_projects') }}" class="card custom-card" style="width: 12rem;">
-              <img
-                src="{{ url_for('static', filename='arduino_board.png') }}"
-                class="card-img-top"
-                alt="Arduino Projects"
-              />
-              <div class="card-body d-flex justify-content-center align-items-center">
-                <h5 class="card-title text-center">مشاريع أردوينو</h5>
+    <div class="row justify-content-start g-4">
+      {% for project in projects %}
+      <div class="col-6 col-md-4 mb-4">
+        <a href="{{ url_for('views.project', project_name=project.name, image=project.image, price=project.price, description=project.description) }}" class="card-anchor-wrapper custom-card">
+          <div class="card h-100 position-relative">
+            <img src="{{ url_for('static', filename=project.image) }}" class="card-img-top" alt="{{ project.name }}" />
+            <div class="card-body d-flex flex-column position-relative align-items-center text-center">
+      
+              {% if project.new %}
+              <div style="
+                position: absolute;
+                top: -10px;
+                right: 0;
+                background-color: #ffd700;
+                color: #000000;
+                font-weight: bold;
+                padding: 4px 10px;
+                border-bottom-left-radius: 6px;
+                font-size: 0.85rem;
+                z-index: 5;
+              ">
+                ★ جديد
               </div>
-            </a>
-          </div>
-
-          <!-- Software Projects Card -->
-          <div class="col-6 col-md-4 d-flex justify-content-center mb-4">
-            <a href="{{ url_for('views.software_projects') }}" class="card custom-card" style="width: 12rem;">
-              <img
-                src="{{ url_for('static', filename='software.png') }}"
-                class="card-img-top"
-                alt="Apps & Games Projects"
-              />
-              <div class="card-body d-flex justify-content-center align-items-center">
-                <h5 class="card-title text-center">برمجيات و العاب</h5>
+              {% endif %}
+      
+              <h5 class="card-title w-100">{{ project.name }}</h5>
+              <p class="card-text text-muted mt-auto">{{ project.description }}</p>
+      
+              <div class="price-badge mt-2 text-center w-100" style="font-weight: bold;">
+                {{ "%.2f"|format(project.price) }} IQD
               </div>
-            </a>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
+      
+      {% endfor %}
     </div>
+  </div>
 
-    <script>
-      function toggleSidebar(e) {
-        e.stopPropagation();
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('active');
+  <script>
+    function toggleSidebar(e) {
+      e.stopPropagation();
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+    function toggleProjects(e) {
+      e.preventDefault();
+      const submenu = document.getElementById('projectsMenu');
+      submenu.classList.toggle('open');
+    }
+    function maybeClose(e) {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      if (sidebar.classList.contains('open')) {
+        toggleSidebar(e);
       }
-      function toggleProjects(e) {
-        e.preventDefault();
-        const submenu = document.getElementById('projectsMenu');
-        submenu.classList.toggle('open');
-      }
-      function maybeClose(e) {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        if (sidebar.classList.contains('open')) {
-          toggleSidebar(e);
-        }
-      }
-    </script>
-  </body>
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>  
+</body>
 </html>

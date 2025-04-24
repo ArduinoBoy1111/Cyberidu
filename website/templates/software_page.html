@@ -1,156 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
-    />
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous" />
 
-    <style>
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background-color: #252525;
-      }
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #252525;
+      overflow-x: hidden;
+    }
 
-      .container {
-        width: 80%;
-        max-width: 1200px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 10px;
-      }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1060;
+      background-color: #343a40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 1rem;
+    }
+    .navbar-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .navbar-toggler {
+      border: none;
+      background: transparent;
+      color: #e8e8e8;
+      font-size: 24px;
+    }
+    .icon-link {
+      color: #e8e8e8;
+      transition: color 0.3s ease;
+      text-decoration: none;
+    }
+    .icon-link:hover {
+      color: #28809a;
+    }
 
-      .icon-link {
-        color: #e8e8e8;
-        transition: color 0.3s ease;
-        text-decoration: none;
-      }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100%;
+      background-color: #2b2b2b;
+      color: #e8e8e8;
+      transition: right 0.3s ease;
+      z-index: 1060;
+      padding-top: 20px;
+    }
+    .sidebar.open {
+      right: 0;
+    }
+    .sidebar a {
+      display: block;
+      color: #e8e8e8;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.3s ease, background 0.3s ease;
+    }
+    .sidebar a:hover {
+      color: #28809a;
+      background-color: rgba(40, 128, 154, 0.1);
+    }
+    .sidebar a i {
+      margin-left: 10px;
+    }
 
-      .icon-link:hover {
-        color: #28809a;
-        text-decoration: none;
-      }
+    .submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding-left: 20px;
+    }
+    .submenu.open {
+      max-height: 200px;
+    }
 
-      .custom-card {
-        background-color: #737778;
-        color: #ffffff;
-        text-decoration: none !important;
-        border-width: 0.4rem;
-        border-color: #404242;
-        transition: transform 0.2s;
-      }
-
-      .custom-card:hover {
-        color: #ffffff;
-        transform: scale(1.03);
-      }
-
-      .custom-card .card-title {
-        color: #ffffff;
-        margin: 0;
-      }
-
-      .container,
-      .row {
-        background-color: transparent !important;
-      }
-
-      .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1030;
-        background-color: #28809a;
-      }
-
-      .navbar-dark .navbar-nav .nav-link {
-        color: #ffffff;
-      }
-
-      .navbar-dark .navbar-nav .nav-link:hover {
-        color: #e8e8e8;
-      }
-
-      .card-anchor-wrapper {
-        display: block;
-        width: 100%;
-        height: 100%;
-        text-decoration: none;
-        transition: transform 0.2s;
-      }
-
-      .card-anchor-wrapper:hover {
-        transform: none;
-      }
-
-      .custom-card {
-        height: 100%;
-      }
-
-      .price-badge {
-        background-color: #28809a;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 5px;
-      }
-
-    </style>
-  </head>
-
-  <body>
-    <nav class="navbar navbar-dark bg-dark d-flex justify-content-between px-3" style="height: 80px;">
-        <div class="d-flex">
-          <a class="icon-link mr-3" href="{{ url_for('views.home') }}">
-            <i class="fa fa-home" style="font-size: 24px;"></i>
-          </a>
-        </div>
-      
-        <div class="d-flex align-items-center" style="height: 100%;">
-          <img src="{{ url_for('static', filename='logo.png') }}" alt="Cyberidu Logo" style="height: 120px; width: auto;">
-        </div>
-      </nav>
-
-    <div class="container mt-5">
-        <div class="row justify-content-start g-4"> <!-- Added g-4 for gap spacing -->
-            {% for project in projects %}
-            <div class="col-6 col-md-4 mb-4"> <!-- Removed flex classes from column -->
-                <a href="{{ url_for('views.project', 
-                  project_name=project.name,
-                  image=project.image,
-                  price=project.price,
-                  description=project.description) }}" 
-                   class="card-anchor-wrapper custom-card">
-                    <div class="card custom-card h-100">
-                        <img src="{{ url_for('static', filename=project.image) }}"
-                             class="card-img-top"
-                             alt="{{ project.name }}"
-                             style="height: 180px; object-fit: cover;">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ project.name }}</h5>
-                            <p class="card-text text-muted mt-auto">{{ project.description }}</p>
-                            <div class="price-badge mt-2">{{ "%.2f"|format(project.price) }} IQD</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
+    .card-anchor-wrapper.custom-card {
+      display: block;
+      box-sizing: border-box;
+      border: 0.4rem solid #404242;
+      border-radius: 10px;
+      background-color: #737778;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      transition: transform 0.2s;
+      overflow: hidden;
+      height: 100%;
+    }
+    .card-anchor-wrapper.custom-card:hover {
+      transform: scale(1.03);
+    }
+    .card-anchor-wrapper.custom-card .card {
+      border: none;
+      background: transparent;
+      height: 100%;
+    }
+    .card-anchor-wrapper.custom-card .card-img-top {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-anchor-wrapper.custom-card .card-title {
+      color: #ffffff;
+      margin: 0;
+    }
+    .price-badge {
+      background-color: #28809a;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark d-flex justify-content-between px-3" onclick="maybeClose(event)">
+    <button class="navbar-toggler" type="button" onclick="toggleSidebar(event)">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="navbar-logo">
+      <img src="{{ url_for('static', filename='updated_logo.png') }}" alt="Cyberidu Logo" style="height:120px;" />
     </div>
+    <div class="d-flex align-items-center">
+      <!-- Back -->
+      <a class="icon-link ml-3" href="javascript:history.back()">
+        <i class="fa fa-arrow-left" style="font-size:24px;"></i>
+      </a>
+      <!-- Home -->
+      <a class="icon-link ml-3" href="{{ url_for('views.home') }}">
+        <i class="fa fa-home" style="font-size:24px;"></i>
+      </a>
+    </div>
+  </nav>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-  </body>
+  <div id="overlay" onclick="toggleSidebar(event)"></div>
+  <div class="sidebar" id="sidebar">
+    <a href="#" onclick="toggleProjects(event)">مشاريع <i class="fa fa-chevron-down"></i></a>
+    <div class="submenu" id="projectsMenu">
+      <a href="{{ url_for('views.arduino_projects') }}">مشاريع أردوينو <i class="fa fa-microchip"></i></a>
+      <a href="{{ url_for('views.software_projects') }}">برمجيات و العاب<i class="fa fa-gamepad"></i></a>
+    </div>
+    <a href="#">خدمة الصيانة <i class="fa fa-wrench"></i></a>
+    <a href="#">من نحن <i class="fa fa-info-circle"></i></a>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row justify-content-start g-4">
+      {% for project in projects %}
+      <div class="col-6 col-md-4 mb-4">
+        <a
+          href="{{ url_for('views.project', project_name=project.name, image=project.image, price=project.price, description=project.description) }}"
+          class="card-anchor-wrapper custom-card"
+        >
+          <div class="card h-100">
+            <img
+              src="{{ url_for('static', filename=project.image) }}"
+              class="card-img-top"
+              alt="{{ project.name }}"
+            />
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ project.name }}</h5>
+              <p class="card-text text-muted mt-auto">{{ project.description }}</p>
+              <div class="price-badge mt-2">{{ "%.2f"|format(project.price) }} IQD</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar(e) {
+      e.stopPropagation();
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+    function toggleProjects(e) {
+      e.preventDefault();
+      const submenu = document.getElementById('projectsMenu');
+      submenu.classList.toggle('open');
+    }
+    function maybeClose(e) {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      if (sidebar.classList.contains('open')) {
+        toggleSidebar(e);
+      }
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>

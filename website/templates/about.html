@@ -1,11 +1,210 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>Sajad safaa<br>Reda</h1>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #252525;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1060;
+      background-color: #343a40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 1rem;
+    }
+
+    .navbar-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: pulse 3s infinite ease-in-out;
+    }
+    .navbar-logo img {
+      height: 120px;
+      width: auto;
+    }
+
+    .navbar-toggler {
+      border: none;
+      background: transparent;
+      color: #e8e8e8;
+      font-size: 24px;
+    }
+
+    .icon-link {
+      color: #e8e8e8;
+      transition: color 0.3s ease;
+      text-decoration: none;
+    }
+    .icon-link:hover {
+      color: #28809a;
+    }
+
+    @keyframes pulse {
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100%;
+      background-color: #2b2b2b;
+      color: #e8e8e8;
+      transition: right 0.3s ease;
+      z-index: 1060;
+      padding-top: 20px;
+    }
+    .sidebar.open {
+      right: 0;
+    }
+    .sidebar a {
+      display: block;
+      color: #e8e8e8;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.3s ease, background 0.3s ease;
+    }
+    .sidebar a:hover {
+      color: #28809a;
+      background-color: rgba(40, 128, 154, 0.1);
+    }
+    .sidebar a i {
+      margin-left: 10px;
+    }
+    .submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding-left: 20px;
+    }
+    .submenu.open {
+      max-height: 200px;
+    }
+
+    .about-section {
+      padding: 60px 30px;
+      text-align: center;
+    }
+    .about-section h1 {
+      color: #28809a;
+      margin-bottom: 30px;
+    }
+    .about-section p {
+      max-width: 800px;
+      margin: 0 auto 20px;
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+    .social-links a {
+      display: inline-block;
+      margin: 10px;
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .social-links .youtube {
+      background-color: #FF0000;
+    }
+    .social-links .telegram {
+      background-color: #0088cc;
+    }
+    .social-links .facebook {
+      background-color: #3b5998;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark d-flex justify-content-between px-3" onclick="maybeClose(event)">
+    <button class="navbar-toggler" type="button" onclick="toggleSidebar(event)">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="navbar-logo">
+      <img src="{{ url_for('static', filename='updated_logo.png') }}" alt="Cyberidu Logo">
+    </div>
+    <div class="d-flex align-items-center">
+      <a class="icon-link ml-3" href="javascript:history.back()">
+        <i class="fa fa-arrow-left" style="font-size:24px;"></i>
+      </a>
+      <a class="icon-link ml-3" href="{{ url_for('views.home') }}">
+        <i class="fa fa-home" style="font-size:24px;"></i>
+      </a>
+    </div>
+  </nav>
+
+  <div id="overlay" onclick="toggleSidebar(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1050;"></div>
+  <div class="sidebar" id="sidebar">
+    <a href="#" onclick="toggleProjects(event)">مشاريع <i class="fa fa-chevron-down"></i></a>
+    <div class="submenu" id="projectsMenu">
+      <a href="{{ url_for('views.arduino_projects') }}">مشاريع أردوينو <i class="fa fa-microchip"></i></a>
+      <a href="{{ url_for('views.software_projects') }}">برمجيات و العاب<i class="fa fa-gamepad"></i></a>
+    </div>
+    <a href="#">خدمة الصيانة <i class="fa fa-wrench"></i></a>
+    <a href="#">من نحن <i class="fa fa-info-circle"></i></a>
+  </div>
+
+  <section class="about-section">
+    <h1>عن كور تيك</h1>
+    <p>
+      نحن في كور تيك نؤمن بأن المشاريع المدرسية والبرمجية يجب أن تكون ممتعة وسهلة التنفيذ. لذلك نقدم حلولاً مبتكرة تعتمد على تقنيات حديثة مثل الأردوينو وتطوير البرمجيات لنجعل من كل مشروع قصة نجاح حقيقية. هدفنا هو تمكين الطلاب من الإبداع وتحفيزهم على الاستكشاف.
+    </p>
+    <p>مطورين المشاريع : سجاد صفاء سعدون , رضا</p>
+    <p>مصمم الويبسايت : سجاد صفاء سعدون</p>
+    <p>
+      نطمح إلى توسيع نطاق تأثيرنا من خلال تقديم محتوى تعليمي مرئي على يوتيوب والتفاعل المباشر مع متابعينا على تلغرام وفيسبوك.
+    </p>
+    <div class="social-links">
+      <a href="https://youtube.com" target="_blank" class="youtube"><i class="fa fa-youtube"></i> قناتنا على يوتيوب</a>
+      <a href="https://t.me/sajad_safaa123" target="_blank" class="telegram"><i class="fa fa-telegram"></i> تواصل عبر تلغرام</a>
+      <a href="https://facebook.com" target="_blank" class="facebook"><i class="fa fa-facebook"></i> صفحتنا على فيسبوك</a>
+    </div>
+  </section>
+
+  <script>
+    function toggleSidebar(e) {
+      e.stopPropagation();
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('open');
+      overlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
+    }
+    function toggleProjects(e) {
+      e.preventDefault();
+      const submenu = document.getElementById('projectsMenu');
+      submenu.classList.toggle('open');
+      submenu.style.maxHeight = submenu.classList.contains('open') ? '200px' : '0';
+    }
+    function maybeClose(e) {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      if (sidebar.classList.contains('open')) {
+        toggleSidebar(e);
+      }
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>

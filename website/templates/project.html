@@ -25,22 +25,26 @@
       height: 80px;
       padding: 0 1rem;
     }
+
     .navbar-logo {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
     }
+
     .navbar-toggler {
       border: none;
       background: transparent;
       color: #e8e8e8;
       font-size: 24px;
     }
+
     .icon-link {
       color: #e8e8e8;
       transition: color 0.3s ease;
       text-decoration: none;
     }
+
     .icon-link:hover {
       color: #28809a;
     }
@@ -57,9 +61,11 @@
       z-index: 1060;
       padding-top: 20px;
     }
+
     .sidebar.open {
       right: 0;
     }
+
     .sidebar a {
       display: block;
       color: #e8e8e8;
@@ -69,10 +75,12 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       transition: color 0.3s ease, background 0.3s ease;
     }
+
     .sidebar a:hover {
       color: #28809a;
       background-color: rgba(40, 128, 154, 0.1);
     }
+
     .sidebar a i {
       margin-left: 10px;
     }
@@ -83,6 +91,7 @@
       transition: max-height 0.3s ease;
       padding-left: 20px;
     }
+
     .submenu.open {
       max-height: 200px;
     }
@@ -91,17 +100,60 @@
       padding: 2rem;
       color: #ffffff;
     }
+
+    #product-gallery {
+      position: relative;
+    }
+
     .project-image {
       height: 60vh;
       object-fit: cover;
       border-radius: 10px;
       border: 0.4rem solid #404242;
-      transition: transform 0.2s ease;
-      cursor: pointer;
+      transition: opacity 0.4s ease-in-out, transform 0.3s ease;
+      cursor: zoom-in;
     }
+
     .project-image:hover {
       transform: scale(1.03);
     }
+
+    .thumbnail {
+      height: 60px;
+      width: auto;
+      border: 2px solid #404242;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.3s;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.1);
+      border-color: #28809a;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      color: white;
+      background-color: rgba(0,0,0,0.4);
+      border: none;
+      padding: 0 10px;
+      cursor: pointer;
+      z-index: 2;
+      border-radius: 4px;
+    }
+
+    .arrow-left {
+      right: 10px;
+    }
+
+    .arrow-right {
+      left: 10px;
+    }
+
     .price-button {
       background-color: #28809a;
       color: #ffffff;
@@ -112,9 +164,11 @@
       transition: transform 0.2s;
       width: 100%;
     }
+
     .price-button:hover {
       transform: scale(1.03);
     }
+
     .description-box {
       background-color: #737778;
       border: 0.4rem solid #404242;
@@ -123,11 +177,39 @@
       margin-top: 2rem;
       color: #ffffff;
     }
-    .description-box h3 {
-      color: #28809a;
-    }
+
+    .description-box {
+  background-color: #737778;
+  border: 0.4rem solid #404242;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-top: 2rem;
+  color: #ffffff;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex-grow: 1;
+  min-height: 100px;
+  max-width: 100%;
+}
+
+
     .row {
       background-color: transparent !important;
+    }
+
+    .modal-content img {
+      animation: fadeZoom 0.4s ease-in-out;
+    }
+
+    @keyframes fadeZoom {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   </style>
 </head>
@@ -140,11 +222,9 @@
       <img src="{{ url_for('static', filename='updated_logo.png') }}" alt="Cyberidu Logo" style="height:120px;" />
     </div>
     <div class="d-flex align-items-center">
-      <!-- Back -->
       <a class="icon-link ml-3" href="javascript:history.back()">
         <i class="fa fa-arrow-left" style="font-size:24px;"></i>
       </a>
-      <!-- Home -->
       <a class="icon-link ml-3" href="{{ url_for('views.home') }}">
         <i class="fa fa-home" style="font-size:24px;"></i>
       </a>
@@ -156,17 +236,32 @@
     <a href="#" onclick="toggleProjects(event)">مشاريع <i class="fa fa-chevron-down"></i></a>
     <div class="submenu" id="projectsMenu">
       <a href="{{ url_for('views.arduino_projects') }}">مشاريع أردوينو <i class="fa fa-microchip"></i></a>
-      <a href="{{ url_for('views.software_projects') }}">برمجيات و العاب<i class="fa fa-gamepad"></i></a>
+      <a  href="{{ url_for('views.about') }}">برمجيات و العاب<i class="fa fa-gamepad"></i></a>
     </div>
     <a href="#">خدمة الصيانة <i class="fa fa-wrench"></i></a>
-    <a href="#">من نحن <i class="fa fa-info-circle"></i></a>
+    <a href="/about">من نحن <i class="fa fa-info-circle"></i></a>
   </div>
 
   <div class="container detail-container">
     <div class="row">
       <div class="col-md-6 text-end" dir="rtl">
         <h1 class="display-4 mb-4" style="color: #28809a;">{{ project_name }}</h1>
-        <img src="{{ url_for('static', filename=project_image) }}" class="project-image w-100" alt="{{ project_name }}">
+        <div id="product-gallery">
+          <img id="mainImage"
+               src="{{ url_for('static', filename=project_images[0]) }}"
+               class="project-image w-100 mb-3"
+               alt="{{ project_name }}"
+               onclick="openModal()">
+          <button class="arrow arrow-left" onclick="changeImage(-1)">&#10094;</button>
+          <button class="arrow arrow-right" onclick="changeImage(1)">&#10095;</button>
+          <div class="d-flex justify-content-center flex-wrap mt-2">
+            {% for image in project_images %}
+              <img src="{{ url_for('static', filename=image) }}"
+                   class="thumbnail mx-1"
+                   onclick="showImage({{ loop.index0 }})">
+            {% endfor %}
+          </div>
+        </div>
       </div>
       <div class="col-md-6">
         <div class="d-flex flex-column h-100">
@@ -180,7 +275,7 @@
               <h3>الوصف</h3>
               <p class="lead">{{ project_description }}</p>
             </div>
-          </div>            
+          </div>
         </div>
       </div>
     </div>
@@ -197,7 +292,6 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
     function toggleSidebar(e) {
       e.stopPropagation();
@@ -206,11 +300,13 @@
       sidebar.classList.toggle('open');
       overlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
     }
+
     function toggleProjects(e) {
       e.preventDefault();
       const submenu = document.getElementById('projectsMenu');
       submenu.classList.toggle('open');
     }
+
     function maybeClose(e) {
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('overlay');
@@ -218,13 +314,35 @@
         toggleSidebar(e);
       }
     }
-    const img = document.querySelector('.project-image');
+
+    const images = {{ project_images | tojson }};
+    let currentImage = 0;
+    const mainImage = document.getElementById('mainImage');
     const modalImg = document.getElementById('modalImage');
-    img.addEventListener('click', () => {
-      modalImg.src = img.src;
+
+    function showImage(index) {
+      if (index < 0 || index >= images.length) return;
+      mainImage.style.opacity = 0;
+      setTimeout(() => {
+        mainImage.src = `/static/${images[index]}`;
+        mainImage.style.opacity = 1;
+      }, 200);
+      currentImage = index;
+    }
+
+    function changeImage(direction) {
+      let newIndex = currentImage + direction;
+      if (newIndex >= images.length) newIndex = 0;
+      if (newIndex < 0) newIndex = images.length - 1;
+      showImage(newIndex);
+    }
+
+    function openModal() {
+      modalImg.src = mainImage.src;
       $('#imageModal').modal('show');
-    });
+    }
   </script>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
